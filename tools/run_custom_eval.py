@@ -280,6 +280,7 @@ PLANNER_VRAM_ESTIMATE_MIB: Dict[str, int] = {
     "minimal": 1500,
     "tcp": 2800,          # observed max ~2350 MB (live confirmed, 16% slack)
     "codriving": 7000,    # was 5500 — caused 6 OOMs in this run. Bump to 7000 (observed max ~4916 MB but under contention saw OOMs at 5500 cap + carla overhead).
+    "codriving_yhs": 7000,
     "vad": 11000,         # observed max ~10476 MB (live confirmed, 5% slack — tight but OK)
     "uniad": 5000,        # observed max ~4036 MB (live confirmed, 24% slack). Note: this run had 5 OOMs — likely from dispatch-race conditions, not under-estimation. Safety buffer raised to 2000 to compensate.
     "lmdrive": 17000,     # observed max ~15146 MB (live confirmed, 12% slack)
@@ -607,6 +608,10 @@ PLANNER_SPECS: dict[str, PlannerSpec] = {
     ),
     "codriving": PlannerSpec(
         agent="simulation/leaderboard/team_code/pnp_agent_e2e_v2v.py",
+        agent_config="simulation/leaderboard/team_code/agent_config/pnp_config_codriving_5_10.yaml",
+    ),
+    "codriving_yhs": PlannerSpec(
+        agent="simulation/leaderboard/team_code/pnp_agent_e2e_v2v_yhs.py",
         agent_config="simulation/leaderboard/team_code/agent_config/pnp_config_codriving_5_10.yaml",
     ),
     "tcp": PlannerSpec(
